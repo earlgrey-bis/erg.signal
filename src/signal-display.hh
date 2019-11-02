@@ -232,6 +232,7 @@ class   Display : public signal::MemberModel, public signal::MemberControl
         Model::sDisplayAtt *   _i_att                           );
 
     void    construct();
+    void    construct_menu();
 
     ~Display ()    {}
 

@@ -48,6 +48,8 @@ Gda::configure-main-widget:no pos/dim change
 #include    <libergc-macros-check-wrapper.h>
 
 #define     TKI(FORMAT, ...)    ERGC_TKI(FORMAT, __VA_ARGS__);
+#define     TKW(FORMAT, ...)    ERGC_TKW(FORMAT, __VA_ARGS__);
+#define     TKE(FORMAT, ...)    ERGC_TKE(FORMAT, __VA_ARGS__);
 //#define     TKI(FORMAT, ...)
 
 #include    <gdk/gdkkeysyms.h>
@@ -162,6 +164,47 @@ Display::construct()
     a_select_mark_h.v1_set  =   false;
     a_select_mark_h.v2_set  =   false;
 
+    construct_menu();
+
+   /*
+    g_signal_connect                    (
+        a_ctx_menu_uim      ,
+        "add-widget"        ,
+        G_CALLBACK
+        (
+            +[] (                                                                                   // my first-ever lambda :)
+                    GtkUIManager    * _i_uim    ,
+                    GtkWidget       * _i_wgt    ,
+                    void            * _i_data   )
+            {
+                printf("add\n");
+                gtk_menu_shell_append( GTK_MENU_SHELL(_i_data), _i_wgt );
+                gtk_widget_show_all(GTK_WIDGET(_i_data));
+            }
+        )                   ,
+        a_ctx_menu_popup    );
+    */
+    //  ............................................................................................
+    //gtk_widget_set_double_buffered(d_area, FALSE);                                                //  conflicts with cairo context optims
+    gtk_widget_add_events (d_area, GDK_POINTER_MOTION_MASK  );
+    gtk_widget_add_events (d_area, GDK_BUTTON_PRESS_MASK    );
+    gtk_widget_add_events (d_area, GDK_BUTTON_RELEASE_MASK  );
+
+    a_handler__configure_event_main_widget  =   g_signal_connect( G_OBJECT(cnt())           , "configure-event"     , (GCallback)GtkEvent__configure_main_widget_first  , (gpointer)this );
+    a_handler__configure_event              =   g_signal_connect( G_OBJECT(d_area)          , "configure-event"     , (GCallback)GtkEvent__configure                    , (gpointer)this );
+    a_handler__expose_event                 =   g_signal_connect( G_OBJECT(d_area)          , "expose-event"        , (GCallback)GtkEvent__expose_event_first           , (gpointer)this );
+
+    a_handler__motion_notify_event          =   g_signal_connect( G_OBJECT(d_area)          , "motion-notify-event" , (GCallback)GtkEvent__motion_notify_event          , (gpointer)this );
+    a_handler__event_button_press           =   g_signal_connect( G_OBJECT(d_area)          , "button-press-event"  , (GCallback)GtkEvent__button_press_event           , (gpointer)this );
+    a_handler__event_button_release         =   g_signal_connect( G_OBJECT(d_area)          , "button-release-event", (GCallback)GtkEvent__button_release_event         , (gpointer)this );
+
+                                                g_signal_connect( G_OBJECT(cnt())           , "key_press_event"     , (GCallback)GtkEvent__key_press_event              , (gpointer)this );
+                                                g_signal_connect( G_OBJECT(cnt())           , "key_release_event"   , (GCallback)GtkEvent__key_release_event            , (gpointer)this );
+    //  ............................................................................................
+}
+void
+Display::construct_menu()
+{
     //  popup
     GError  *   gerror = nullptr;
 
@@ -197,47 +240,9 @@ Display::construct()
 
     if (gerror)
     {
-        printf("ERR:%s\n", gerror->message);
+        TKE("%s\n", gerror->message);
     }
-    /*
-    g_signal_connect                    (
-        a_ctx_menu_uim      ,
-        "add-widget"        ,
-        G_CALLBACK
-        (
-            +[] (                                                                                   // my first-ever lambda :)
-                    GtkUIManager    * _i_uim    ,
-                    GtkWidget       * _i_wgt    ,
-                    void            * _i_data   )
-            {
-                printf("add\n");
-                gtk_menu_shell_append( GTK_MENU_SHELL(_i_data), _i_wgt );
-                gtk_widget_show_all(GTK_WIDGET(_i_data));
-            }
-        )                   ,
-        a_ctx_menu_popup    );
-    */
-    //  ............................................................................................
-    //gtk_widget_set_double_buffered(d_area, FALSE);                                                //  conflicts with cairo context optims
-    gtk_widget_add_events (d_area, GDK_POINTER_MOTION_MASK  );
-    gtk_widget_add_events (d_area, GDK_BUTTON_PRESS_MASK    );
-    gtk_widget_add_events (d_area, GDK_BUTTON_RELEASE_MASK  );
-
-    a_handler__configure_event_main_widget  =   g_signal_connect( G_OBJECT(cnt())           , "configure-event"     , (GCallback)GtkEvent__configure_main_widget_first  , (gpointer)this );
-    a_handler__configure_event              =   g_signal_connect( G_OBJECT(d_area)          , "configure-event"     , (GCallback)GtkEvent__configure                    , (gpointer)this );
-    a_handler__expose_event                 =   g_signal_connect( G_OBJECT(d_area)          , "expose-event"        , (GCallback)GtkEvent__expose_event_first           , (gpointer)this );
-
-    a_handler__motion_notify_event          =   g_signal_connect( G_OBJECT(d_area)          , "motion-notify-event" , (GCallback)GtkEvent__motion_notify_event          , (gpointer)this );
-    a_handler__event_button_press           =   g_signal_connect( G_OBJECT(d_area)          , "button-press-event"  , (GCallback)GtkEvent__button_press_event           , (gpointer)this );
-    a_handler__event_button_release         =   g_signal_connect( G_OBJECT(d_area)          , "button-release-event", (GCallback)GtkEvent__button_release_event         , (gpointer)this );
-
-                                                g_signal_connect( G_OBJECT(cnt())           , "key_press_event"     , (GCallback)GtkEvent__key_press_event              , (gpointer)this );
-                                                g_signal_connect( G_OBJECT(cnt())           , "key_release_event"   , (GCallback)GtkEvent__key_release_event            , (gpointer)this );
-    //  ............................................................................................
-
-
-
-}
+ }
 //  ################################################################################################
 gboolean
 Display::GtkEvent__configure_main_widget_first(

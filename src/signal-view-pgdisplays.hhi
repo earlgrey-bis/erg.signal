@@ -76,6 +76,12 @@ class   PgDisplays : public signal::MemberModel, public signal::MemberControl
         GtkWidget                       *       d_labl_data_area;
     } sWidgets20;
 
+    typedef struct _sListStore20
+    {
+        size_t                      a_signal_uid;
+
+    } sListStore20;
+
   private:
     GtkWidget                       *   d_vbox;
 
@@ -87,11 +93,17 @@ class   PgDisplays : public signal::MemberModel, public signal::MemberControl
     size_t                              a_rdbt_selected_display_uid;
 
     GtkWidget                       *     d_frame_20;
-    //GtkWidget                       *         d_trvw_20;
-    //GObject                         *         d_lsto_20;
     GtkWidget                       *       d_vbox_20;
-    GtkWidget                       *         d_table_20;
-    std::vector< sWidgets20 >                 a_widgets20;
+
+    //GtkWidget                       *         d_table_20;
+    //std::vector< sWidgets20 >                 a_widgets20;
+
+    GtkWidget                       *         d_trvw_20;
+    std::vector<GtkCellRenderer*>             a_celr_20;
+    std::vector<GtkTreeViewColumn*>           a_trvc_20;
+    GtkListStore                    *         d_lstr_20;
+    GtkListStore                    *         d_lstr_motif_20;
+    std::vector<sListStore20>                 a_vlst_20;
 
   public:
     GtkWidget   *   wgt()   { return d_vbox; }
@@ -114,11 +126,12 @@ class   PgDisplays : public signal::MemberModel, public signal::MemberControl
     //  from Main::GenericView
   private:
     static  void        GtkEvent__pgdisplays10__display__toggled__checkbutton       (GtkToggleButton    *   , gpointer);
-    static  void        GtkEvent__pgdisplays20__signal__toggled__checkbutton        (GtkToggleButton    *   , gpointer);
-    static  void        GtkEvent__pgdisplays20__signal__changed__cbbx               (GtkComboBox        *   , gpointer);
-    static  void        GtkEvent__pgdisplays20__signal__value_changed__adj          (GtkAdjustment      *   , gpointer);
-    static  void        GtkEvent__pgdisplays20__signal__color_set__colorbutton      (GtkColorButton     *   , gpointer);
-    static  void        GtkEvent__pgdisplays20__signal__toggled__checkbutton_join   (GtkToggleButton    *   , gpointer);
+
+    static  void        GtkEvent__pgdisplays20__signal__toggled__checkbutton        (GtkCellRendererToggle  *   _i_cr   , gchar *   _i_path , gpointer);
+    static  void        GtkEvent__pgdisplays20__signal__changed__cbbx               (GtkComboBox            *                               , gpointer);
+    static  void        GtkEvent__pgdisplays20__signal__value_changed__adj          (GtkAdjustment          *                               , gpointer);
+    static  void        GtkEvent__pgdisplays20__signal__color_set__colorbutton      (GtkColorButton         *                               , gpointer);
+    static  void        GtkEvent__pgdisplays20__signal__toggled__checkbutton_join   (GtkToggleButton        *                               , gpointer);
     //  --------------------------------------------------------------------------------------------
     //  ()~()
     //  --------------------------------------------------------------------------------------------

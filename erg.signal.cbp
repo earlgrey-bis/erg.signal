@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="erg.signal" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Option virtualFolders="src/;src/Display/;src/Main/;" />
+		<Build>
+			<Target title="D">
+				<Option output="bin/D/erg-signal" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/D/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="R">
+				<Option output="bin/R/erg-signal" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj/R/" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Compiler>
+					<Add option="-Wall" />
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="`pkg-config --cflags gtk+-2.0`" />
+			<Add option="-fno-exceptions" />
+			<Add option="-fno-rtti" />
+			<Add directory="../liberg/C/common" />
+		</Compiler>
+		<Linker>
+			<Add option="`pkg-config --libs gtk+-2.0`" />
+		</Linker>
+		<Unit filename="src/signal-control.cc">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-control.hh">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-data.hh">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/signal-display-data.cpp">
+			<Option virtualFolder="src/Display/" />
+		</Unit>
+		<Unit filename="src/signal-display-draw.cpp">
+			<Option virtualFolder="src/Display/" />
+		</Unit>
+		<Unit filename="src/signal-display-gtk.cc">
+			<Option virtualFolder="src/Display/" />
+		</Unit>
+		<Unit filename="src/signal-display-utils.cc">
+			<Option virtualFolder="src/Display/" />
+		</Unit>
+		<Unit filename="src/signal-display.hh">
+			<Option virtualFolder="src/Display/" />
+		</Unit>
+		<Unit filename="src/signal-main-gtk.cc">
+			<Option compile="0" />
+			<Option link="0" />
+		</Unit>
+		<Unit filename="src/signal-main.cc">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/signal-main.hh">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/signal-model-cst-acc-display.hhi">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-model-cst-acc-signal.hhi">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-model.cc">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-model.hh">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-types.hh">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Unit filename="src/signal-view-pgdisplays.cc">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-view-pgdisplays.hhi">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-view-pgmixer.cc">
+			<Option compile="0" />
+			<Option link="0" />
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-view-pgmixer.hhi">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-view-pgsignals.cc">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-view-pgsignals.hhi">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-view.cc">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-view.hh">
+			<Option virtualFolder="src/Main/" />
+		</Unit>
+		<Unit filename="src/signal-vpstorage.hh">
+			<Option virtualFolder="src/" />
+		</Unit>
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

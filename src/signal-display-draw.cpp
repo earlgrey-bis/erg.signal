@@ -1,8 +1,10 @@
 #include    <libergc-common.h>
 #include    <libergc-macros-check-wrapper.h>
 
-//#define     TKI(FORMAT, ...)    ERGC_TKI(FORMAT, __VA_ARGS__);
-#define     TKI(FORMAT, ...)
+#define     TKI(FORMAT, ...)    ERGC_TKI(FORMAT, __VA_ARGS__);
+#define     TKW(FORMAT, ...)    ERGC_TKW(FORMAT, __VA_ARGS__);
+#define     TKE(FORMAT, ...)    ERGC_TKE(FORMAT, __VA_ARGS__);
+//#define     TKI(FORMAT, ...)
 
 #include    "signal-display.hh"
 #include    "signal-data.hh"
@@ -16,13 +18,14 @@ namespace signal
 void
 Display::z_draw()
 {
-    gint        ax      =   0;
-    gint        ay      =   0;
+    GtkAllocation       alc;
+    gint                ax      =   0;
+    gint                ay      =   0;
     //  ............................................................................................
     printf("z_draw():");
-
-    ax      =   wgt()->allocation.width;
-    ay      =   wgt()->allocation.height;
+    gtk_widget_get_allocation(wgt(), &alc);
+    ax      =   alc.width;
+    ay      =   alc.height;
     //  ............................................................................................
     //  main context
     if ( d_ctx )
@@ -110,8 +113,9 @@ Display::z_draw()
 void
 Display::z_draw_signal(cairo_t* _i_cr, IData const * _i_idata, sDrawStyle const * _i_style, size_t _i_sample_ix1, size_t _i_sample_ix2)
 {
-    gint            ax  =   wgt()->allocation.width;
-    gint            ay  =   wgt()->allocation.height;
+    GtkAllocation   alc;
+    gint            ax      =   0.0;
+    gint            ay      =   0.0;
 
     double          pxd     =   0.0;
     double          pyd     =   0.0;
@@ -127,6 +131,10 @@ Display::z_draw_signal(cairo_t* _i_cr, IData const * _i_idata, sDrawStyle const 
     bool            bCircle =   false;
     bool            bDisk   =   false;
     double          cln     =   0.0f;
+    //  ............................................................................................
+    gtk_widget_get_allocation(wgt(), &alc);
+    ax  =   alc.width;
+    ay  =   alc.height;
     //  ............................................................................................
     ERGC_RTV__T( _i_sample_ix1 > _i_idata->crd() );
     ERGC_RTV__T( _i_sample_ix2 > _i_idata->crd() );
@@ -165,7 +173,6 @@ Display::z_draw_signal(cairo_t* _i_cr, IData const * _i_idata, sDrawStyle const 
     if  (   ( x >= atti()->area.a_xmin ) && ( x <= atti()->area.a_xmax )  &&
             ( y >= atti()->area.a_ymin ) && ( y <= atti()->area.a_ymax )  )
     {
-
         z_coords__area_to_widget_xy( &nxd, &nyd, (double)ax, (double)ay, x, y);
         cairo_set_line_width(_i_cr, mep);
 
@@ -223,9 +230,14 @@ Display::z_draw_signals(cairo_t* _i_ctx)
 void
 Display::z_draw_select_marks(cairo_t*   _i_cr)
 {
-    gint            ax  =   wgt()->allocation.width;
-    gint            ay  =   wgt()->allocation.height;
+    GtkAllocation   alc;
+    gint            ax      =   0.0;
+    gint            ay      =   0.0;
     double          x1, x2, y1, y2;
+    //  ............................................................................................
+    gtk_widget_get_allocation(wgt(), &alc);
+    ax  =   alc.width;
+    ay  =   alc.height;
     //  ............................................................................................
     cairo_set_source_rgb(_i_cr,
         (double)80.0   / 255.0f ,
@@ -281,11 +293,16 @@ Display::z_draw_select_marks(cairo_t*   _i_cr)
 void
 Display::z_draw_axes(cairo_t* _i_ctx)
 {
-    gint    ax = wgt()->allocation.width;
-    gint    ay = wgt()->allocation.height;
+    GtkAllocation   alc;
+    gint            ax      =   0.0;
+    gint            ay      =   0.0;
 
-    double  y0d, x0d;
-
+    double          y0d, x0d;
+    //  ............................................................................................
+    gtk_widget_get_allocation(wgt(), &alc);
+    ax  =   alc.width;
+    ay  =   alc.height;
+    //  ............................................................................................
     cairo_select_font_face(_i_ctx, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(_i_ctx, 10);
 
@@ -368,12 +385,20 @@ Display::z_draw_axes(cairo_t* _i_ctx)
 void
 Display::z_draw_mouse_coords(cairo_t* _i_ctx, gint _i_mouse_x, gint _i_mouse_y)
 {
+    GtkAllocation   alc;
+    gint            ax      =   0.0;
+    gint            ay      =   0.0;
+
+    double          y0d, x0d;
+
     static  char                    text    [128]   =   "";
             cairo_text_extents_t    te;
-            gint                    ax  = wgt()->allocation.width;
-            gint                    ay  = wgt()->allocation.height;
             double                  x,y;
-
+    //  ............................................................................................
+    gtk_widget_get_allocation(wgt(), &alc);
+    ax  =   alc.width;
+    ay  =   alc.height;
+    //  ............................................................................................
     z_coords__widget_to_area_xy(&x, &y, (double)ax, (double)ay, (double)_i_mouse_x, (double)_i_mouse_y);
 
     cairo_select_font_face  (_i_ctx, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);

@@ -57,11 +57,11 @@ View::PgDisplays::gtkreate()
     //  ............................................................................................
     a_rdbt_selected_display_uid         =   0;
     //  ............................................................................................
-    d_vbox                              =   gtk_vbox_new(FALSE, 2);
+    d_vbox                              =   gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
 
       d_frame_10                        =   gtk_frame_new("All displays");
 
-        d_vbox_10                       =   gtk_vbox_new(FALSE, 2);
+        d_vbox_10                       =   gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
           d_table_10                    =   gtk_table_new(0, 5, FALSE);
           d_pshb_add_display            =   gtk_button_new_with_label("Add display");
 
@@ -69,7 +69,7 @@ View::PgDisplays::gtkreate()
 
         //d_trvw_20                       =   gtk_tree_view_new();
         //d_lsto_20                       =   gtk_list_store_new(
-        d_vbox_20                       =   gtk_vbox_new(FALSE, 2);
+        d_vbox_20                       =   gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
           d_table_20                    =   gtk_table_new(0, 5, FALSE);
     //  ............................................................................................
     g_object_set                ( d_table_10, "border-width", 5, NULL);                             // avoid frame bottom too close from last line
@@ -169,7 +169,7 @@ View::PgDisplays::refresh_frame1()
 
         wgts10.d_labl_display_name      =   gtk_label_new(att->d.name.c_str());
 
-        wgts10.d_vsep_1                 =   gtk_vseparator_new();
+        wgts10.d_vsep_1                 =   gtk_separator_new(GTK_ORIENTATION_VERTICAL);
 
         wgts10.d_adjs_xmin_def          =   gtk_adjustment_new(att->i.area.a_xmin, -1.0, 1.0, 0.1, 0.1, 0.0);
         wgts10.d_spib_xmin_def          =   gtk_spin_button_new(GTK_ADJUSTMENT(wgts10.d_adjs_xmin_def), 0.0, 5);
@@ -185,7 +185,7 @@ View::PgDisplays::refresh_frame1()
 
         wgts10.d_labl_area_current      =   gtk_label_new("[0.0 0.0 0.0 0.0]");
 
-        wgts10.d_vsep_2                 =   gtk_vseparator_new();
+        wgts10.d_vsep_2                 =   gtk_separator_new(GTK_ORIENTATION_VERTICAL);
 
         wgts10.d_adjs_rulers_x          =   gtk_adjustment_new(att->i.rulers.x, 0.0, 10.0, 1.0, 1.0, 0.0);
         wgts10.d_spib_rulers_x          =   gtk_spin_button_new(GTK_ADJUSTMENT(wgts10.d_adjs_rulers_x), 0.0, 0);
@@ -405,7 +405,7 @@ View::PgDisplays::refresh_frame2()
             (gpointer)vcd                                                                       );
 
         // create additional widgets
-        wgts20.d_vsep_1                 =   gtk_vseparator_new();
+        wgts20.d_vsep_1                 =   gtk_separator_new(GTK_ORIENTATION_VERTICAL);
 
         wgts20.d_adjs_signal_ix1        =   gtk_adjustment_new( 0.0, 0.0, idata->crd() - 1, 1.0, .0, 0.0);
         wgts20.d_spib_signal_ix1        =   gtk_spin_button_new(GTK_ADJUSTMENT(wgts20.d_adjs_signal_ix1), 0.0, 0);

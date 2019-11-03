@@ -225,7 +225,7 @@ Display::construct()
 
     a_handler__configure_event_main_widget  =   g_signal_connect( G_OBJECT(cnt())           , "configure-event"     , (GCallback)GtkEvent__configure_main_widget_first  , (gpointer)this );
     a_handler__configure_event              =   g_signal_connect( G_OBJECT(d_area)          , "configure-event"     , (GCallback)GtkEvent__configure                    , (gpointer)this );
-    a_handler__expose_event                 =   g_signal_connect( G_OBJECT(d_area)          , "expose-event"        , (GCallback)GtkEvent__expose_event_first           , (gpointer)this );
+    a_handler__draw                         =   g_signal_connect( G_OBJECT(d_area)          , "draw"                , (GCallback)GtkEvent__draw_first                   , (gpointer)this );
 
     a_handler__motion_notify_event          =   g_signal_connect( G_OBJECT(d_area)          , "motion-notify-event" , (GCallback)GtkEvent__motion_notify_event          , (gpointer)this );
     a_handler__event_button_press           =   g_signal_connect( G_OBJECT(d_area)          , "button-press-event"  , (GCallback)GtkEvent__button_press_event           , (gpointer)this );
@@ -276,28 +276,28 @@ Display::GtkEvent__size_allocate(
 }
 //  ************************************************************************************************
 gboolean
-Display::GtkEvent__expose_event_first(
-    GtkWidget   *   _i_widget   ,
-    GdkEvent    *   _i_event    ,
-    gpointer        _i_data     )
+Display::GtkEvent__draw_first(
+    GtkWidget       *   _i_widget   ,
+    cairo_t         *   _i_cr       ,
+    gpointer            _i_data     )
 {
     signal::Display  *   THIS = (signal::Display*)_i_data;
 
     //TKI("%s\n", "Gda::expose-event first");
 
-    return THIS->gtkevent__expose_event_first( (GdkEventExpose*)_i_event );
+    return THIS->gtkevent__draw_first(_i_cr);
 }
 gboolean
-Display::GtkEvent__expose_event(
-    GtkWidget   *   _i_widget   ,
-    GdkEvent    *   _i_event    ,
-    gpointer        _i_data     )
+Display::GtkEvent__draw(
+    GtkWidget       *   _i_widget   ,
+    cairo_t         *   _i_cr       ,
+    gpointer            _i_data     )
 {
     signal::Display  *   THIS = (signal::Display*)_i_data;
 
     //TKI("%s\n", "Gda::expose-event");
 
-    return THIS->gtkevent__expose_event( (GdkEventExpose*)_i_event );
+    return THIS->gtkevent__draw(_i_cr);
 }
 //  ************************************************************************************************
 gboolean
@@ -571,22 +571,22 @@ Display::gtkevent__configure(
 }
 //  ************************************************************************************************
 gboolean
-Display::gtkevent__expose_event_first(
-    GdkEventExpose  *   _i_expose)
+Display::gtkevent__draw_first(
+    cairo_t         *   _i_cr)
 {
     //  because we are called before the first "configure-event" on main widget, we have to get
     //  main app window parameters here
     gdk_window_get_origin(gtk_widget_get_window(cnt()), &a_sza_rec.n.pos.x, &a_sza_rec.n.pos.y);
-    a_sza_rec.n.dim.w   =   _i_expose->area.width;
-    a_sza_rec.n.dim.h   =   _i_expose->area.height;
+    a_sza_rec.n.dim.w   =   gtk_widget_get_allocated_width(wgt());//_i_expose->area.width;
+    a_sza_rec.n.dim.h   =   gtk_widget_get_allocated_height(wgt());//_i_expose->area.height;
     a_sza_rec.o         =   a_sza_rec.n;
 
     //  cairo stuff
     a_gdk_window                =   gtk_widget_get_window(d_area);
 
     //  switch signal handlers
-    g_signal_handler_disconnect(G_OBJECT(d_area), a_handler__expose_event);
-    a_handler__expose_event     =   g_signal_connect( G_OBJECT(d_area), "expose-event"      , (GCallback)GtkEvent__expose_event , (gpointer)this );
+    g_signal_handler_disconnect(G_OBJECT(d_area), a_handler__draw);
+    a_handler__draw             =   g_signal_connect( G_OBJECT(d_area), "draw"              , (GCallback)GtkEvent__draw         , (gpointer)this );
     a_handler__size_allocate    =   g_signal_connect( G_OBJECT(d_area), "size-allocate"     , (GCallback)GtkEvent__size_allocate, (gpointer)this );
 
     z_draw();
@@ -594,8 +594,8 @@ Display::gtkevent__expose_event_first(
     return TRUE;
 }
 gboolean
-Display::gtkevent__expose_event(
-    GdkEventExpose  *   _i_evt)
+Display::gtkevent__draw(
+    cairo_t         *   _i_cr)
 {
     //TKI("expose\n");
 
@@ -695,9 +695,12 @@ gboolean
 Display::gtkevent__button_press_event(
     GdkEventButton  *   _i_evt)
 {
+    GtkAllocation   alc;
     double  ax  =   0.0;
     double  ay  =   0.0;
     //  ............................................................................................
+    gtk_widget_get_allocation(wgt(), &alc);
+
     a_mouse.click.bt        =   _i_evt->button;
     a_mouse.click.b1        =   ( _i_evt->button == 1 );
     a_mouse.click.b2        =   ( _i_evt->button == 2 );
@@ -710,8 +713,8 @@ Display::gtkevent__button_press_event(
     if ( _i_evt->button == 1 )
     {
 
-    ax              =   (double)wgt()->allocation.width;
-    ay              =   (double)wgt()->allocation.height;
+    ax              =   (double)alc.width;
+    ay              =   (double)alc.height;
 
     a_mouse.click.dragx = 0;
     a_mouse.click.dragy = 0;
@@ -738,13 +741,15 @@ gboolean
 Display::gtkevent__button_release_event(
     GdkEventButton  *   _i_evt)
 {
+    GtkAllocation   alc;
     double  x   =   0.0;
     double  y   =   0.0;
     double  ax  =   0.0;
     double  ay  =   0.0;
     //  ............................................................................................
-    ax  =   (double)wgt()->allocation.width;
-    ay  =   (double)wgt()->allocation.height;
+    gtk_widget_get_allocation(wgt(), &alc);
+    ax  =   (double)alc.width;
+    ay  =   (double)alc.height;
 
     if ( _i_evt->button != 1 )
         return FALSE;

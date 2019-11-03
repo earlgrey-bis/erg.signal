@@ -21,13 +21,13 @@ class   PgDisplays : public signal::MemberModel, public signal::MemberControl
         GtkWidget                       *       d_vsep_1;
 
         GtkWidget                       *       d_spib_xmin_def;
-        GtkObject                       *       d_adjs_xmin_def;
+        GtkAdjustment                   *       d_adjs_xmin_def;
         GtkWidget                       *       d_spib_xmax_def;
-        GtkObject                       *       d_adjs_xmax_def;
+        GtkAdjustment                   *       d_adjs_xmax_def;
         GtkWidget                       *       d_spib_ymin_def;
-        GtkObject                       *       d_adjs_ymin_def;
+        GtkAdjustment                   *       d_adjs_ymin_def;
         GtkWidget                       *       d_spib_ymax_def;
-        GtkObject                       *       d_adjs_ymax_def;
+        GtkAdjustment                   *       d_adjs_ymax_def;
 
         GtkWidget                       *       d_pshb_area_cur_to_def;
         GtkWidget                       *       d_pshb_area_def_to_cur;
@@ -37,14 +37,14 @@ class   PgDisplays : public signal::MemberModel, public signal::MemberControl
         GtkWidget                       *       d_vsep_2;
 
         GtkWidget                       *       d_spib_rulers_x;
-        GtkObject                       *       d_adjs_rulers_x;
+        GtkAdjustment                         *       d_adjs_rulers_x;
         GtkWidget                       *       d_spib_rulers_y;
-        GtkObject                       *       d_adjs_rulers_y;
+        GtkAdjustment                   *       d_adjs_rulers_y;
 
         GtkWidget                       *       d_spib_axis_x;
-        GtkObject                       *       d_adjs_axis_x;
+        GtkAdjustment                   *       d_adjs_axis_x;
         GtkWidget                       *       d_spib_axis_y;
-        GtkObject                       *       d_adjs_axis_y;
+        GtkAdjustment                   *       d_adjs_axis_y;
 
         GtkWidget                       *       d_colb_bgcolor;
 
@@ -61,16 +61,16 @@ class   PgDisplays : public signal::MemberModel, public signal::MemberControl
         GtkWidget                       *       d_vsep_1;
 
         GtkWidget                       *       d_spib_signal_ix1;
-        GtkObject                       *       d_adjs_signal_ix1;
+        GtkAdjustment                   *       d_adjs_signal_ix1;
         GtkWidget                       *       d_spib_signal_ix2;
-        GtkObject                       *       d_adjs_signal_ix2;
+        GtkAdjustment                   *       d_adjs_signal_ix2;
 
         GtkWidget                       *       d_cbbx_signal_motif;
         GtkWidget                       *       d_spib_signal_ep;
-        GtkObject                       *       d_adjs_signal_ep;
+        GtkAdjustment                   *       d_adjs_signal_ep;
         GtkWidget                       *       d_chkb_signal_join;
         GtkWidget                       *       d_spib_signal_join_ep;
-        GtkObject                       *       d_adjs_signal_join_ep;
+        GtkAdjustment                   *       d_adjs_signal_join_ep;
         GtkWidget                       *       d_colb_signal;
 
         GtkWidget                       *       d_labl_data_area;

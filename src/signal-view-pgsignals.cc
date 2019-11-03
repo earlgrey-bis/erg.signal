@@ -30,7 +30,7 @@ void
 View::PgSignals::gtkreate()
 {
     //  ............................................................................................
-    d_vbox_1                            =   gtk_vbox_new(FALSE, 2);
+    d_vbox_1                            =   gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
 
       d_frame_1                         =   gtk_frame_new("Signals");
 

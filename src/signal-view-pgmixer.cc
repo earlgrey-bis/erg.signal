@@ -32,7 +32,7 @@ View::PgMixer::gtkreate()
 {
     //View::CallbackData  *   vcd     =   nullptr;
     //  ............................................................................................
-    d_vbox_1                            =   gtk_vbox_new(FALSE, 2);
+    d_vbox_1                            =   gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
 
       d_frame_1                         =   gtk_frame_new("Mixer");
 
@@ -45,7 +45,7 @@ View::PgMixer::gtkreate()
 
           d_vwpr_signals                =   gtk_viewport_new(NULL, NULL);
           d_scrw_signals                =   gtk_scrolled_window_new(NULL, NULL);
-          d_vbox_signals                =   gtk_vbox_new(FALSE, 2);
+          d_vbox_signals                =   gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
 
       d_frame_2                         =   gtk_frame_new("Others");
     //  ............................................................................................

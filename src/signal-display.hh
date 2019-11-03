@@ -77,7 +77,7 @@ class   Display : public signal::MemberModel, public signal::MemberControl
 
     gulong                      a_handler__configure_event_main_widget;
 
-    gulong                      a_handler__expose_event;
+    gulong                      a_handler__draw;
     gulong                      a_handler__configure_event;
     gulong                      a_handler__size_allocate;
     gulong                      a_handler__motion_notify_event;
@@ -89,8 +89,8 @@ class   Display : public signal::MemberModel, public signal::MemberControl
 
             gboolean    gtkevent__size_allocate                 (GdkRectangle*);
             gboolean    gtkevent__configure                     (GdkEventConfigure*);
-            gboolean    gtkevent__expose_event_first            (GdkEventExpose*);
-            gboolean    gtkevent__expose_event                  (GdkEventExpose*);
+            gboolean    gtkevent__draw_first                    (cairo_t*);
+            gboolean    gtkevent__draw                          (cairo_t*);
             //gboolean    gtkevent__motion_notify_event_first     (GdkEventMotion*);
             gboolean    gtkevent__motion_notify_event           (GdkEventMotion*);
             gboolean    gtkevent__button_press_event            (GdkEventButton*);
@@ -103,8 +103,8 @@ class   Display : public signal::MemberModel, public signal::MemberControl
 
     static  gboolean    GtkEvent__size_allocate                 (GtkWidget*, GdkRectangle*  , gpointer);
     static  gboolean    GtkEvent__configure                     (GtkWidget*, GdkEvent*      , gpointer);
-    static  gboolean    GtkEvent__expose_event_first            (GtkWidget*, GdkEvent*      , gpointer);
-    static  gboolean    GtkEvent__expose_event                  (GtkWidget*, GdkEvent*      , gpointer);
+    static  gboolean    GtkEvent__draw_first                    (GtkWidget*, cairo_t*       , gpointer);
+    static  gboolean    GtkEvent__draw                          (GtkWidget*, cairo_t*       , gpointer);
     static  gboolean    GtkEvent__motion_notify_event_first     (GtkWidget*, GdkEvent*      , gpointer);
     static  gboolean    GtkEvent__motion_notify_event           (GtkWidget*, GdkEvent*      , gpointer);
     static  gboolean    GtkEvent__button_press_event            (GtkWidget*, GdkEvent*      , gpointer);

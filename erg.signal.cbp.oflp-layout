@@ -8,10 +8,6 @@
 	<File name="src/signal-display.hh" uid="018024056000975" />
 	<File name="src/signal-view-pgdisplays.cc" uid="018024056000975" />
 	<File name="src/signal-view-pgdisplays.hhi" uid="018024056000975" />
-	<File name="src/signal-view-pgmixer.cc" uid="018024056000975" />
-	<File name="src/signal-view-pgmixer.hhi" uid="018024056000975" />
-	<File name="src/signal-view-pgsignals.cc" uid="018024056000975" />
-	<File name="src/signal-view-pgsignals.hhi" uid="018024056000975" />
 	<File name="src/signal-view.cc" uid="018024056000975" />
 	<File name="src/signal-view.hh" uid="018024056000975" />
 	<File name="src/signal-vpstorage.hh" uid="018011049000282" />

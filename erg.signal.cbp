@@ -69,15 +69,11 @@
 		<Unit filename="src/signal-display.hh">
 			<Option virtualFolder="src/Display/" />
 		</Unit>
-		<Unit filename="src/signal-main-gtk.cc">
-			<Option compile="0" />
-			<Option link="0" />
-		</Unit>
 		<Unit filename="src/signal-main.cc">
-			<Option virtualFolder="src/" />
+			<Option virtualFolder="src/Main/" />
 		</Unit>
 		<Unit filename="src/signal-main.hh">
-			<Option virtualFolder="src/" />
+			<Option virtualFolder="src/Main/" />
 		</Unit>
 		<Unit filename="src/signal-model-cst-acc-display.hhi">
 			<Option virtualFolder="src/Main/" />

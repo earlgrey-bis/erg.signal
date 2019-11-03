@@ -120,6 +120,7 @@ Control::display__chg_area(
     att.area.set(_i_xmin, _i_xmax, _i_ymin, _i_ymax);
 
     model() ->display__set_att_I    (_i_display_uid, &att);
+    view()  ->refresh();
     view()  ->refresh_display       (_i_display_uid, true, true, true, true, true);
 }
 
@@ -137,6 +138,7 @@ Control::display__chg_signal_motif(
     att.style.motif = static_cast< signal::eDrawMotif >( _i_motif );
 
     model() ->display__set_signal_att   (_i_display_uid, _i_signal_uid, &att);
+    view()  ->refresh();
     view()  ->refresh_display           (_i_display_uid, true, false, false, false, false);
 }
 void
@@ -153,6 +155,7 @@ Control::display__chg_signal_ix1(
     att.ix1 = _i_ix1;
 
     model() ->display__set_signal_att   (_i_display_uid, _i_signal_uid, &att);
+    view()  ->refresh();
     view()  ->refresh_display           (_i_display_uid, true, false, false, false, false);
 }
 void
@@ -169,6 +172,7 @@ Control::display__chg_signal_ix2(
     att.ix2 = _i_ix2;
 
     model() ->display__set_signal_att   (_i_display_uid, _i_signal_uid, &att);
+    view()  ->refresh();
     view()  ->refresh_display           (_i_display_uid, true, false, false, false, false);
 }
 void
@@ -201,6 +205,7 @@ Control::display__chg_signal_join(
     att.style.join = _i_join;
 
     model() ->display__set_signal_att   (_i_display_uid, _i_signal_uid, &att);
+    view()  ->refresh();
     view()  ->refresh_display           (_i_display_uid, true, false, false, false, false);
 }
 void
@@ -233,6 +238,7 @@ Control::display__chg_signal_color(
     att.style.color = *( _i_color );
 
     model() ->display__set_signal_att   (_i_display_uid, _i_signal_uid, &att);
+    view()  ->refresh();
     view()  ->refresh_display           (_i_display_uid, true, false, false, false, false);
 }
 //  ================================================================================================

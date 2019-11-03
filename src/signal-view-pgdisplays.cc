@@ -378,7 +378,7 @@ View::PgDisplays::refresh_frame2()
             goto lab_push;
         }
 
-        //  signal drawed ?
+        //  signal not drawed in display ?
         if ( ! sds )
         {
             g_signal_connect(
@@ -434,6 +434,7 @@ View::PgDisplays::refresh_frame2()
         if ( style->join )
         {
             gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(wgts20.d_chkb_signal_join), TRUE );
+            gtk_widget_set_sensitive(wgts20.d_spib_signal_join_ep, TRUE);
         }
         else
         {

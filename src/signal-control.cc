@@ -145,7 +145,7 @@ void
 Control::display__chg_signal_ix1(
     size_t      _i_display_uid  ,
     size_t      _i_signal_uid   ,
-    gdouble     _i_ix1)
+    size_t      _i_ix1          )
 {
     Model::sDisplayedSignalAtt  att;
     //  ............................................................................................
@@ -162,7 +162,7 @@ void
 Control::display__chg_signal_ix2(
     size_t      _i_display_uid  ,
     size_t      _i_signal_uid   ,
-    gdouble     _i_ix2)
+    size_t      _i_ix2          )
 {
     Model::sDisplayedSignalAtt  att;
     //  ............................................................................................

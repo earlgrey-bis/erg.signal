@@ -37,13 +37,13 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++11" />
-			<Add option="`pkg-config --cflags gtk+-2.0`" />
+			<Add option="`pkg-config --cflags gtk+-3.0`" />
 			<Add option="-fno-exceptions" />
 			<Add option="-fno-rtti" />
 			<Add directory="../liberg/C/common" />
 		</Compiler>
 		<Linker>
-			<Add option="`pkg-config --libs gtk+-2.0`" />
+			<Add option="`pkg-config --libs gtk+-3.0`" />
 		</Linker>
 		<Unit filename="src/signal-control.cc">
 			<Option virtualFolder="src/Main/" />

@@ -2,138 +2,354 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="D" />
-	<File name="src/signal-control.cc" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/signal-control.cc" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="651" topLine="44" />
-		</Cursor>
-	</File>
-	<File name="src/signal-model.cc" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1432" topLine="17" />
-		</Cursor>
-	</File>
-	<File name="src/signal-data.hh" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="752" topLine="52" />
-		</Cursor>
-	</File>
-	<File name="src/signal-display-utils.cc" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2443" topLine="16" />
-		</Cursor>
-	</File>
-	<File name="src/signal-types.hh" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5487" topLine="98" />
+			<Cursor1 position="6486" topLine="94" />
 		</Cursor>
 		<Folding>
-			<Collapse line="22" />
+			<Collapse line="26" />
+			<Collapse line="40" />
+			<Collapse line="52" />
+			<Collapse line="72" />
+			<Collapse line="91" />
+			<Collapse line="103" />
+			<Collapse line="113" />
+			<Collapse line="131" />
+			<Collapse line="182" />
+			<Collapse line="215" />
+			<Collapse line="231" />
+			<Collapse line="249" />
+			<Collapse line="278" />
+		</Folding>
+	</File>
+	<File name="src/signal-view-pgdisplays.hhi" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6778" topLine="55" />
+		</Cursor>
+		<Folding>
+			<Collapse line="0" />
+			<Collapse line="53" />
+		</Folding>
+	</File>
+	<File name="src/signal-display.hh" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6542" topLine="40" />
+		</Cursor>
+		<Folding>
+			<Collapse line="24" />
+			<Collapse line="30" />
+			<Collapse line="32" />
 			<Collapse line="46" />
-			<Collapse line="69" />
-		</Folding>
-	</File>
-	<File name="src/signal-display-draw.cpp" open="1" top="1" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5535" topLine="110" />
-		</Cursor>
-		<Folding>
-			<Collapse line="77" />
-			<Collapse line="82" />
-			<Collapse line="87" />
-			<Collapse line="94" />
-			<Collapse line="99" />
-			<Collapse line="104" />
-			<Collapse line="289" />
-		</Folding>
-	</File>
-	<File name="src/signal-model.hh" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="665" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="src/signal-view.hh" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="857" topLine="116" />
-		</Cursor>
-	</File>
-	<File name="src/signal-vpstorage.hh" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2706" topLine="10" />
-		</Cursor>
-		<Folding>
-			<Collapse line="42" />
 			<Collapse line="55" />
-			<Collapse line="63" />
-			<Collapse line="96" />
-			<Collapse line="101" />
-			<Collapse line="106" />
 		</Folding>
 	</File>
-	<File name="src/signal-display-data.cpp" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/signal-types.hh" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1203" topLine="2" />
+			<Cursor1 position="2662" topLine="38" />
 		</Cursor>
+		<Folding>
+			<Collapse line="91" />
+			<Collapse line="100" />
+			<Collapse line="111" />
+			<Collapse line="124" />
+			<Collapse line="130" />
+			<Collapse line="136" />
+			<Collapse line="142" />
+			<Collapse line="154" />
+			<Collapse line="159" />
+			<Collapse line="170" />
+			<Collapse line="181" />
+			<Collapse line="187" />
+			<Collapse line="193" />
+			<Collapse line="196" />
+			<Collapse line="201" />
+			<Collapse line="206" />
+			<Collapse line="221" />
+			<Collapse line="233" />
+			<Collapse line="239" />
+			<Collapse line="243" />
+			<Collapse line="250" />
+			<Collapse line="260" />
+		</Folding>
 	</File>
-	<File name="src/signal-main.hh" open="1" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/signal-model.hh" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5345" topLine="72" />
+		</Cursor>
+		<Folding>
+			<Collapse line="2" />
+			<Collapse line="53" />
+			<Collapse line="56" />
+			<Collapse line="59" />
+			<Collapse line="64" />
+			<Collapse line="72" />
+			<Collapse line="77" />
+			<Collapse line="106" />
+			<Collapse line="112" />
+			<Collapse line="117" />
+			<Collapse line="123" />
+			<Collapse line="128" />
+			<Collapse line="132" />
+			<Collapse line="141" />
+			<Collapse line="146" />
+		</Folding>
+	</File>
+	<File name="src/signal-model.cc" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1432" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="13" />
+			<Collapse line="15" />
+			<Collapse line="23" />
+			<Collapse line="27" />
+			<Collapse line="30" />
+			<Collapse line="38" />
+			<Collapse line="46" />
+			<Collapse line="60" />
+			<Collapse line="64" />
+			<Collapse line="67" />
+			<Collapse line="76" />
+			<Collapse line="83" />
+			<Collapse line="97" />
+			<Collapse line="98" />
+			<Collapse line="118" />
+			<Collapse line="139" />
+			<Collapse line="141" />
+			<Collapse line="143" />
+			<Collapse line="153" />
+			<Collapse line="155" />
+			<Collapse line="157" />
+			<Collapse line="169" />
+			<Collapse line="187" />
+			<Collapse line="207" />
+			<Collapse line="217" />
+			<Collapse line="231" />
+			<Collapse line="240" />
+			<Collapse line="254" />
+		</Folding>
+	</File>
+	<File name="src/signal-main.hh" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="395" topLine="0" />
 		</Cursor>
+		<Folding>
+			<Collapse line="12" />
+			<Collapse line="14" />
+			<Collapse line="17" />
+		</Folding>
 	</File>
-	<File name="src/signal-view.cc" open="1" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/signal-main.cc" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="23268" topLine="18" />
+			<Cursor1 position="1135" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="0" />
+			<Collapse line="20" />
+			<Collapse line="29" />
+			<Collapse line="31" />
+			<Collapse line="34" />
+			<Collapse line="45" />
+			<Collapse line="66" />
+		</Folding>
+	</File>
+	<File name="src/signal-view-pgdisplays.cc" open="1" top="1" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="35428" topLine="370" />
+		</Cursor>
+		<Folding>
+			<Collapse line="22" />
+			<Collapse line="24" />
+			<Collapse line="37" />
+			<Collapse line="168" />
+			<Collapse line="179" />
+			<Collapse line="186" />
+			<Collapse line="190" />
+			<Collapse line="200" />
+			<Collapse line="215" />
+			<Collapse line="225" />
+			<Collapse line="271" />
+			<Collapse line="300" />
+			<Collapse line="302" />
+			<Collapse line="307" />
+			<Collapse line="311" />
+			<Collapse line="317" />
+			<Collapse line="331" />
+			<Collapse line="349" />
+			<Collapse line="355" />
+			<Collapse line="387" />
+			<Collapse line="402" />
+			<Collapse line="417" />
+			<Collapse line="529" />
+			<Collapse line="538" />
+			<Collapse line="546" />
+			<Collapse line="577" />
+			<Collapse line="583" />
+			<Collapse line="598" />
+			<Collapse line="602" />
+			<Collapse line="610" />
+			<Collapse line="628" />
+			<Collapse line="644" />
+			<Collapse line="657" />
+			<Collapse line="678" />
+			<Collapse line="683" />
+		</Folding>
+	</File>
+	<File name="src/signal-view.hh" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="857" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="40" />
+			<Collapse line="46" />
+			<Collapse line="49" />
+			<Collapse line="65" />
+			<Collapse line="141" />
+		</Folding>
+	</File>
+	<File name="src/signal-view.cc" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="570" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="21" />
+			<Collapse line="26" />
+			<Collapse line="50" />
+			<Collapse line="56" />
+			<Collapse line="70" />
+			<Collapse line="89" />
+		</Folding>
+	</File>
+	<File name="src/signal-display-utils.cc" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2443" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="10" />
+			<Collapse line="12" />
+			<Collapse line="15" />
+			<Collapse line="20" />
+			<Collapse line="29" />
+			<Collapse line="37" />
+			<Collapse line="48" />
+			<Collapse line="57" />
+			<Collapse line="65" />
+			<Collapse line="76" />
+		</Folding>
+	</File>
+	<File name="src/signal-display-gtk.cc" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="22275" topLine="539" />
+		</Cursor>
+		<Folding>
+			<Collapse line="598" />
+			<Collapse line="612" />
+			<Collapse line="634" />
+			<Collapse line="642" />
+			<Collapse line="654" />
+			<Collapse line="661" />
+			<Collapse line="668" />
+			<Collapse line="676" />
+			<Collapse line="696" />
+			<Collapse line="713" />
+			<Collapse line="734" />
+			<Collapse line="742" />
+			<Collapse line="757" />
+			<Collapse line="760" />
+			<Collapse line="803" />
+			<Collapse line="809" />
+			<Collapse line="816" />
+			<Collapse line="823" />
+		</Folding>
+	</File>
+	<File name="src/signal-control.hh" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2977" topLine="18" />
+		</Cursor>
+		<Folding>
 			<Collapse line="33" />
 		</Folding>
 	</File>
-	<File name="src/signal-main-view-pgsignals.hhi" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src/signal-display-draw.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1106" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src/signal-view-pgdisplays.cc" open="1" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5245" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src/signal-main.cc" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1135" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="src/signal-view-pgdisplays.hhi" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2767" topLine="15" />
-		</Cursor>
-	</File>
-	<File name="src/signal-control.hh" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1895" topLine="20" />
-		</Cursor>
-	</File>
-	<File name="src/signal-display.hh" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6542" topLine="94" />
-		</Cursor>
-	</File>
-	<File name="src/signal-display-gtk.cc" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2505" topLine="1" />
+			<Cursor1 position="3087" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="0" />
-			<Collapse line="276" />
-			<Collapse line="317" />
-			<Collapse line="341" />
-			<Collapse line="349" />
-			<Collapse line="358" />
-			<Collapse line="431" />
-			<Collapse line="461" />
-			<Collapse line="475" />
-			<Collapse line="557" />
-			<Collapse line="595" />
+			<Collapse line="31" />
+			<Collapse line="38" />
+			<Collapse line="40" />
+			<Collapse line="53" />
+			<Collapse line="56" />
+			<Collapse line="75" />
+			<Collapse line="114" />
+			<Collapse line="147" />
+			<Collapse line="161" />
+			<Collapse line="174" />
+			<Collapse line="192" />
+			<Collapse line="208" />
+			<Collapse line="214" />
+			<Collapse line="250" />
+			<Collapse line="252" />
+			<Collapse line="260" />
+			<Collapse line="262" />
+			<Collapse line="270" />
+			<Collapse line="272" />
+			<Collapse line="280" />
+			<Collapse line="282" />
+			<Collapse line="294" />
+			<Collapse line="309" />
+			<Collapse line="321" />
+			<Collapse line="347" />
+			<Collapse line="359" />
+			<Collapse line="386" />
+		</Folding>
+	</File>
+	<File name="src/signal-display-data.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1203" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="7" />
+			<Collapse line="9" />
+			<Collapse line="11" />
+			<Collapse line="45" />
+			<Collapse line="64" />
+			<Collapse line="66" />
+			<Collapse line="72" />
+			<Collapse line="79" />
+			<Collapse line="81" />
+			<Collapse line="86" />
+			<Collapse line="96" />
+		</Folding>
+	</File>
+	<File name="src/signal-vpstorage.hh" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="909" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="21" />
+			<Collapse line="26" />
+			<Collapse line="46" />
+		</Folding>
+	</File>
+	<File name="src/signal-data.hh" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="752" topLine="0" />
+		</Cursor>
+		<Folding>
+			<Collapse line="6" />
+			<Collapse line="8" />
+			<Collapse line="12" />
+			<Collapse line="44" />
+			<Collapse line="51" />
+			<Collapse line="70" />
+			<Collapse line="77" />
+			<Collapse line="83" />
+			<Collapse line="88" />
+			<Collapse line="104" />
+			<Collapse line="110" />
+			<Collapse line="121" />
+			<Collapse line="132" />
+			<Collapse line="141" />
 		</Folding>
 	</File>
 </CodeBlocks_layout_file>

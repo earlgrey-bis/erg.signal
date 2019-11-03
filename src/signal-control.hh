@@ -65,8 +65,8 @@ class   Control : public signal::MemberModel, public signal::MemberView
     void    display__del_signal         (size_t _i_display_uid, size_t _i_signal_uid);
     void    display__chg_area           (size_t _i_display_uid, double _i_xmin, double _i_xmax, double _i_ymin, double _i_ymax);
     void    display__chg_signal_motif   (size_t _i_display_uid, size_t _i_signal_uid, gint _i_ix);
-    void    display__chg_signal_ix1     (size_t _i_display_uid, size_t _i_signal_uid, gdouble _i_ix1);
-    void    display__chg_signal_ix2     (size_t _i_display_uid, size_t _i_signal_uid, gdouble _i_ix2);
+    void    display__chg_signal_ix1     (size_t _i_display_uid, size_t _i_signal_uid, size_t _i_ix1);
+    void    display__chg_signal_ix2     (size_t _i_display_uid, size_t _i_signal_uid, size_t _i_ix2);
     void    display__chg_signal_ep      (size_t _i_display_uid, size_t _i_signal_uid, gdouble _i_ep);
     void    display__chg_signal_join    (size_t _i_display_uid, size_t _i_signal_uid, bool _i_join);
     void    display__chg_signal_join_ep (size_t _i_display_uid, size_t _i_signal_uid, gdouble _i_ep);

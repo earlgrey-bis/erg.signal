@@ -4,6 +4,8 @@
 #include    <libergc-macros-check-wrapper.h>
 
 #define     TKI(FORMAT, ...)    ERGC_TKI(FORMAT, __VA_ARGS__);
+#define     TKW(FORMAT, ...)    ERGC_TKW(FORMAT, __VA_ARGS__);
+#define     TKE(FORMAT, ...)    ERGC_TKE(FORMAT, __VA_ARGS__);
 //#define     TKI(FORMAT, ...)
 
 #include    "signal-data.hh"
@@ -27,19 +29,6 @@ View::PgDisplays::widgets10__get_from_display_uid(size_t _i_display_uid)
 
     return nullptr;
 }
-/*
-View::PgDisplays::sWidgets20    *
-View::PgDisplays::widgets20__get_from_signal_uid(size_t _i_signal_uid)
-{
-    for ( size_t i = 0 ; i != a_widgets20.size() ; i++ )
-    {
-        if ( a_widgets20.at(i).a_data_uid == _i_signal_uid )
-            return &( a_widgets20.at(i) );
-    }
-
-    return nullptr;
-}
-*/
 
 View::PgDisplays::PgDisplays(
     signal::Model   *   _i_model    ,
@@ -54,6 +43,7 @@ void
 View::PgDisplays::gtkreate()
 {
     View::CallbackData  *   vcd     =   nullptr;
+    GtkTreeIter             iter;
     //  ............................................................................................
     a_rdbt_selected_display_uid         =   0;
     //  ............................................................................................
@@ -66,26 +56,101 @@ View::PgDisplays::gtkreate()
           d_pshb_add_display            =   gtk_button_new_with_label("Add display");
 
       d_frame_20                        =   gtk_frame_new("Others");
-
-        //d_trvw_20                       =   gtk_tree_view_new();
-        //d_lsto_20                       =   gtk_list_store_new(
         d_vbox_20                       =   gtk_box_new(GTK_ORIENTATION_VERTICAL, 2);
-          d_table_20                    =   gtk_table_new(0, 5, FALSE);
+          d_trvw_20                     =   gtk_tree_view_new();
+          d_lstr_20                     =   gtk_list_store_new(10,
+                G_TYPE_BOOLEAN                                  ,                                   // (draw chkb)
+                G_TYPE_STRING   , G_TYPE_STRING , G_TYPE_STRING ,                                   // (idx) (name) (card)
+                G_TYPE_STRING   , G_TYPE_STRING                 ,                                   // (ix1) (ix2)
+                G_TYPE_STRING   , G_TYPE_STRING                 ,                                   // (motif) (motif ep)
+                G_TYPE_BOOLEAN  , G_TYPE_STRING                 );                                  // (draw chkb)
+
+    gtk_tree_view_set_model( GTK_TREE_VIEW(d_trvw_20), GTK_TREE_MODEL(d_lstr_20));
+    //  ............................................................................................
+    a_celr_20.push_back( gtk_cell_renderer_toggle_new()       );                                    // 00 (draw chkb)
+        vcd = new View::CallbackData(this, (gpointer)0x1234, 0xab);
+        g_signal_connect( a_celr_20.at( 0), "toggled", G_CALLBACK(GtkEvent__pgdisplays20__signal__toggled__checkbutton), vcd);
+    a_celr_20.push_back( gtk_cell_renderer_text_new()         );                                    // 01 (idx)
+    a_celr_20.push_back( gtk_cell_renderer_text_new()         );                                    // 02 (name)
+    a_celr_20.push_back( gtk_cell_renderer_text_new()         );                                    // 03 (card)
+        g_object_set( G_OBJECT(a_celr_20.at( 1)), "editable", FALSE, NULL);
+        g_object_set( G_OBJECT(a_celr_20.at( 2)), "editable", FALSE, NULL);
+        g_object_set( G_OBJECT(a_celr_20.at( 3)), "editable",  TRUE, NULL);
+
+    a_celr_20.push_back( gtk_cell_renderer_spin_new()         );                                    // 04 (ix1)
+    a_celr_20.push_back( gtk_cell_renderer_spin_new()         );                                    // 05 (ix2)
+        d_adjs_ix1  =   gtk_adjustment_new(    0.0, 0.0, 1023.0, 1.0, 10.0, 0.0);
+        d_adjs_ix2  =   gtk_adjustment_new( 1023.0, 0.0, 1023.0, 1.0, 10.0, 0.0);
+        g_object_set( G_OBJECT(a_celr_20.at( 4)), "editable",  TRUE, "adjustment", d_adjs_ix1, "digits", 0, NULL);
+        g_object_set( G_OBJECT(a_celr_20.at( 5)), "editable",  TRUE, "adjustment", d_adjs_ix2, "digits", 0, NULL);
+        vcd = new View::CallbackData(this, nullptr, 4);
+        g_signal_connect( a_celr_20.at( 4), "edited", G_CALLBACK(GtkEvent__pgdisplays20__signal__edited__spin_ix), vcd);
+        vcd = new View::CallbackData(this, nullptr, 5);
+        g_signal_connect( a_celr_20.at( 5), "edited", G_CALLBACK(GtkEvent__pgdisplays20__signal__edited__spin_ix), vcd);
+
+    a_celr_20.push_back( gtk_cell_renderer_combo_new()        );                                    // 06 (motif)
+        d_lstr_motif_20 = gtk_list_store_new(1, G_TYPE_STRING);
+        gtk_list_store_append   ( d_lstr_motif_20, &iter);
+        gtk_list_store_set      ( d_lstr_motif_20, &iter, 0, "Cross 1", -1);
+        gtk_list_store_append   ( d_lstr_motif_20, &iter);
+        gtk_list_store_set      ( d_lstr_motif_20, &iter, 0, "Cross 2", -1);
+        gtk_list_store_append   ( d_lstr_motif_20, &iter);
+        gtk_list_store_set      ( d_lstr_motif_20, &iter, 0, "Cross 3", -1);
+        gtk_list_store_append   ( d_lstr_motif_20, &iter);
+        gtk_list_store_set      ( d_lstr_motif_20, &iter, 0, "Cross 4", -1);
+        g_object_set( G_OBJECT(a_celr_20.at( 6))    ,
+            "text-column"   , 0                     ,
+            "editable"      , TRUE                  ,
+            "has-entry"     , FALSE                 ,
+            "model"         , d_lstr_motif_20       ,
+            NULL                                    );
+    a_celr_20.push_back( gtk_cell_renderer_text_new()         );                                    // 07 (motif ep)
+        g_object_set( G_OBJECT(a_celr_20.at( 7)), "editable",  FALSE, NULL);
+
+    a_celr_20.push_back( gtk_cell_renderer_toggle_new()       );                                    // 08 (join)
+        vcd = new View::CallbackData(this, (gpointer)0x1234, 0xab);
+        g_signal_connect( a_celr_20.at( 8), "toggled", G_CALLBACK(GtkEvent__pgdisplays20__signal__toggled__checkbutton_join), vcd);
+    a_celr_20.push_back( gtk_cell_renderer_text_new()         );                                    // 09 (join ep)
+        g_object_set( G_OBJECT(a_celr_20.at( 9)), "editable",  FALSE, NULL);
+
+    a_celr_20.push_back( gtk_cell_renderer_toggle_new()       );                                    // 10 (color)
+
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("Draw"    , a_celr_20.at( 0), "active",  0, NULL) );
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("UID"     , a_celr_20.at( 1), "text"  ,  1, NULL) );
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("Name"    , a_celr_20.at( 2), "text"  ,  2, NULL) );
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("Card"    , a_celr_20.at( 3), "text"  ,  3, NULL) );
+
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("ix1"     , a_celr_20.at( 4), "text"  ,  4, NULL) );
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("ix2"     , a_celr_20.at( 5), "text"  ,  5, NULL) );
+        gtk_tree_view_column_set_resizable( a_trvc_20.at( 4), TRUE );
+        gtk_tree_view_column_set_resizable( a_trvc_20.at( 5), TRUE );
+
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("motif"   , a_celr_20.at( 6), "text"  ,  6, NULL) );
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("thick"   , a_celr_20.at( 7), "text"  ,  7, NULL) );
+
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("motif"   , a_celr_20.at( 8), "active",  8, NULL) );
+    a_trvc_20.push_back( gtk_tree_view_column_new_with_attributes("thick"   , a_celr_20.at( 9), "text"  ,  9, NULL) );
+
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 0));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 1));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 2));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 3));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 4));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 5));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 6));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 7));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 8));
+    gtk_tree_view_append_column( GTK_TREE_VIEW(d_trvw_20), a_trvc_20.at( 9));
     //  ............................................................................................
     g_object_set                ( d_table_10, "border-width", 5, NULL);                             // avoid frame bottom too close from last line
     gtk_table_set_row_spacings  ( GTK_TABLE(d_table_10), 5 );
     gtk_table_set_col_spacings  ( GTK_TABLE(d_table_10), 5 );
-
-    g_object_set                ( d_table_20, "border-width", 5, NULL);                             // avoid frame bottom too close from last line
-    gtk_table_set_row_spacings  ( GTK_TABLE(d_table_20), 5 );
-    gtk_table_set_col_spacings  ( GTK_TABLE(d_table_20), 5 );
     //  ............................................................................................
     gtk_box_pack_start  ( GTK_BOX(d_vbox_10)        , d_table_10            , FALSE, FALSE, 0);
     gtk_box_pack_start  ( GTK_BOX(d_vbox_10)        , d_pshb_add_display    , FALSE, FALSE, 0);
     gtk_container_add   ( GTK_CONTAINER(d_frame_10) , d_vbox_10);
 
-    gtk_box_pack_start  ( GTK_BOX(d_vbox_20)        , d_table_20            , FALSE, FALSE, 0);
-    //gtk_box_pack_start  ( GTK_BOX(d_vbox_20)         , d_pshb_add_display    , FALSE, FALSE, 0);
+    gtk_box_pack_start  ( GTK_BOX(d_vbox_20)        , d_trvw_20             , FALSE, FALSE, 0);
     gtk_container_add   ( GTK_CONTAINER(d_frame_20) , d_vbox_20);
 
     gtk_box_pack_start  ( GTK_BOX(d_vbox)           , d_frame_10,   FALSE, FALSE, 0);
@@ -303,7 +368,9 @@ View::PgDisplays::refresh_frame2()
     GList                               *   children;
     GList                               *   child;
 
-    PgDisplays::sWidgets20                  wgts20;
+    GtkTreeIter                             iter;
+
+    PgDisplays::sModel20                    modl20;
 
     Model::sCDisplay                    *   sdp     =   nullptr;
     Model::sDisplayedSignal     const   *   sds     =   nullptr;
@@ -312,19 +379,24 @@ View::PgDisplays::refresh_frame2()
     signal::IData               const   *   idata;
     Model::sSignalAtt           const   *   att     =   nullptr;
 
-    char                                    s1          [32];
+    char                                    str         [16][32];
+    bool                                    b00;
+    bool                                    b08;
     View::CallbackData                  *   vcd     =   nullptr;
     //  ............................................................................................
     //  delete old widgets from table
+    /*
     children = gtk_container_get_children(GTK_CONTAINER(d_table_20));
     child = g_list_first(children) ; while ( child)
     {
         // gtk_widget_destroy will remove child from container, and invalidate all connected signals
         gtk_widget_destroy( (GtkWidget*)child->data );
-
         child = g_list_next(child);
     }
     a_widgets20.clear();
+    */
+    gtk_list_store_clear( d_lstr_20 );
+    a_modl_20.clear();                                                                              // __ERG_TODO__ delete adjustmemts too
     //  ............................................................................................
     //  get selected display
     if ( a_rdbt_selected_display_uid != 0 )
@@ -338,6 +410,8 @@ View::PgDisplays::refresh_frame2()
                                         idata   =   ssn->idata;
                                         att     =   ssn->att;
 
+                                        sds     =   nullptr;
+
         signal::sDrawStyle  const   *   style   = nullptr;
 
         if ( sdp )
@@ -348,175 +422,187 @@ View::PgDisplays::refresh_frame2()
 
         size_t  i       =   mod()->signal__enum_idx();
         gint    x       =  -1;
-
         //  ........................................................................................
-        //  base widgets : checkbutton, uid, name, ix1, ix2
-        wgts20.a_data_uid               =   idata->uid();
-
-        wgts20.d_chkb_data_draw         =   gtk_check_button_new();
-
-        sprintf(s1, "%02lu", idata->uid());
-        wgts20.d_labl_data_index        =   gtk_label_new(s1);
-        wgts20.d_labl_data_sname        =   gtk_label_new(att->d.sname.c_str());
-
-        sprintf(s1, "%02lu", idata->crd());
-        wgts20.d_labl_data_samples_card =   gtk_label_new(s1);
-
-        //  pack
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_chkb_data_draw         , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_labl_data_index        , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_labl_data_sname        , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_labl_data_samples_card , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-
-        //  signals
-        vcd = new View::CallbackData(this, nullptr, wgts20.a_data_uid);
-
-        //  no display
-        if ( ! sdp )
-        {
-            gtk_widget_set_sensitive(wgts20.d_chkb_data_draw, false);
-            goto lab_push;
-        }
-
-        //  signal not drawed in display ?
+        //  base widgets only : (draw chkb) (idx) (name) (card)
         if ( ! sds )
         {
-            g_signal_connect(
-                wgts20.d_chkb_data_draw                                                             ,
-                "toggled"                                                                           ,
-                G_CALLBACK(View::PgDisplays::GtkEvent__pgdisplays20__signal__toggled__checkbutton)  ,
-                (gpointer)vcd                                                                       );
 
-            goto lab_push;
+        TKI("%s\n", "Refresh 20 - simple");
+
+        sprintf(str[ 1], "%02lu", idata->uid()          );
+        sprintf(str[ 2], "%02lu", idata->crd()          );
+        sprintf(str[ 3], "%s"   , att->d.sname.c_str()  );
+
+        modl20.a_signal_uid = idata->uid();
+
+        gtk_list_store_append   ( d_lstr_20, &iter);
+        gtk_list_store_set      ( d_lstr_20, &iter,
+             0, FALSE       ,
+             1, str[ 1]     ,
+             2, str[ 2]     ,
+             3, str[ 3]     ,
+
+             4, "---"       ,
+             5, "---"       ,
+
+             6, "---"       ,
+             7, "---"       ,
+
+             8, FALSE       ,
+             9, "---"       ,
+
+            -1              );
+
+        a_modl_20.push_back(modl20);
+
         }
-        //  ........................................................................................
-        //  drawed signal
-
-        //  activate the checkbutton
-        gtk_toggle_button_set_active(                                                               // this does send a "toggled" signal
-            GTK_TOGGLE_BUTTON(wgts20.d_chkb_data_draw)  ,
-            TRUE                                        );
-
-        //  connect it only after activation for avoiding infinite loop
-        g_signal_connect(
-            wgts20.d_chkb_data_draw                                                             ,
-            "toggled"                                                                           ,
-            G_CALLBACK(View::PgDisplays::GtkEvent__pgdisplays20__signal__toggled__checkbutton)  ,
-            (gpointer)vcd                                                                       );
-
-        // create additional widgets
-        wgts20.d_vsep_1                 =   gtk_separator_new(GTK_ORIENTATION_VERTICAL);
-
-        wgts20.d_adjs_signal_ix1        =   gtk_adjustment_new( 0.0, 0.0, idata->crd() - 1, 1.0, .0, 0.0);
-        wgts20.d_spib_signal_ix1        =   gtk_spin_button_new(GTK_ADJUSTMENT(wgts20.d_adjs_signal_ix1), 0.0, 0);
-        wgts20.d_adjs_signal_ix2        =   gtk_adjustment_new( idata->crd() - 1, 0.0, idata->crd() - 1, 1.0, 10.0, 0.0);
-        wgts20.d_spib_signal_ix2        =   gtk_spin_button_new(GTK_ADJUSTMENT(wgts20.d_adjs_signal_ix2), 0.0, 0);
-
-        wgts20.d_cbbx_signal_motif      =   gtk_combo_box_text_new();
-
-        wgts20.d_adjs_signal_ep         =   gtk_adjustment_new( style->motif_ep, 0.25, 2.0, 0.25, 0.25, 0.0);
-        wgts20.d_spib_signal_ep         =   gtk_spin_button_new(GTK_ADJUSTMENT(wgts20.d_adjs_signal_ep), 0.0, 2);
-
-        wgts20.d_chkb_signal_join       =   gtk_check_button_new();
-        wgts20.d_adjs_signal_join_ep    =   gtk_adjustment_new( style->join_ep, 0.25, 2.0, 0.25, 0.25, 0.0);
-        wgts20.d_spib_signal_join_ep    =   gtk_spin_button_new(GTK_ADJUSTMENT(wgts20.d_adjs_signal_join_ep), 0.0, 2);
-
-        wgts20.d_colb_signal            =   gtk_color_button_new();
-
-        gtk_color_button_set_color      ( GTK_COLOR_BUTTON  (wgts20.d_colb_signal       ), & sds->att.style.color );
-        gtk_combo_box_text_append_text  ( GTK_COMBO_BOX_TEXT(wgts20.d_cbbx_signal_motif ), "cross 1");
-        gtk_combo_box_text_append_text  ( GTK_COMBO_BOX_TEXT(wgts20.d_cbbx_signal_motif ), "cross 2");
-        gtk_combo_box_text_append_text  ( GTK_COMBO_BOX_TEXT(wgts20.d_cbbx_signal_motif ), "cross 3");
-        gtk_combo_box_text_append_text  ( GTK_COMBO_BOX_TEXT(wgts20.d_cbbx_signal_motif ), "cross 4");
-        gtk_combo_box_set_active        ( GTK_COMBO_BOX     (wgts20.d_cbbx_signal_motif ), sds->att.style.motif);
-
-        //  join signal dots ?
-        if ( style->join )
-        {
-            gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(wgts20.d_chkb_signal_join), TRUE );
-            gtk_widget_set_sensitive(wgts20.d_spib_signal_join_ep, TRUE);
-        }
+        //  All widgets : (draw chkb) (idx) (name) (card) * (ix1) (ix2) * (motif) (motif ep) (join) (join ep) (color)
         else
         {
-            gtk_toggle_button_set_active( GTK_TOGGLE_BUTTON(wgts20.d_chkb_signal_join), FALSE );
-            gtk_widget_set_sensitive(wgts20.d_spib_signal_join_ep, FALSE);
+
+        TKI("%s\n", "Refresh 20 - full");
+
+        //  ----- (draw chkb) (idx) (name) (card)
+        sprintf(str[ 1], "%02lu", idata->uid()          );
+        sprintf(str[ 2], "%02lu", idata->crd()          );
+        sprintf(str[ 3], "%s"   , att->d.sname.c_str()  );
+
+        modl20.a_signal_uid = idata->uid();
+        //  ----- (ix1) (ix2)
+        sprintf(str[ 4], "%02lu", sds->att.ix1          );
+        sprintf(str[ 5], "%02lu", sds->att.ix2          );
+
+        //  ----- (motif) (motif ep)
+        sprintf(str[ 6], "%02lu", sds->att.ix2          );
+        switch ( sds->att.style.motif )
+        {
+            case    signal::eCross01    :   sprintf(str[ 6], "Cross 01");   break;
+            case    signal::eCross02    :   sprintf(str[ 6], "Cross 02");   break;
+            case    signal::eCross03    :   sprintf(str[ 6], "Cross 03");   break;
+            case    signal::eCross04    :   sprintf(str[ 6], "Cross 04");   break;
+            default                     :   sprintf(str[ 6], "Cross 02");   break;
+        }
+        sprintf(str[ 7], "%03.2lf", sds->att.style.motif_ep);
+
+        b08 = sds->att.style.join;
+
+        gtk_list_store_append (d_lstr_20, &iter);
+
+        gtk_list_store_set( d_lstr_20, &iter,
+             0,  TRUE       ,
+             1, str[ 1]     ,
+             2, str[ 2]     ,
+             3, str[ 3]     ,
+
+             4, str[ 4]     ,
+             5, str[ 5]     ,
+
+             6, str[ 6]     ,
+             7, str[ 7]     ,
+
+             8, b08         ,
+             9, "---"       ,
+
+            -1              );
+
+        a_modl_20.push_back(modl20);
+
         }
 
-        //  pack
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_vsep_1                 , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_FILL      , 0, 0);
-
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_spib_signal_ix1        , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_spib_signal_ix2        , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_cbbx_signal_motif      , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_spib_signal_ep         , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_chkb_signal_join       , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_spib_signal_join_ep    , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-        x+=1 ; gtk_table_attach( GTK_TABLE(d_table_20), wgts20.d_colb_signal            , (guint)x, (guint)(x+1), i, i + 1, GTK_SHRINK   , GTK_SHRINK    , 0, 0);
-
-        //  signals
-        vcd = new View::CallbackData(this);
-        vcd->a_szt1         =   a_rdbt_selected_display_uid;
-        vcd->a_szt2         =   wgts20.a_data_uid;
-        g_signal_connect(wgts20.d_cbbx_signal_motif, "changed"          , G_CALLBACK(PgDisplays::GtkEvent__pgdisplays20__signal__changed__cbbx), (gpointer)vcd);
-
-        vcd = new View::CallbackData(this);
-        vcd->a_szt1         =   a_rdbt_selected_display_uid;
-        vcd->a_szt2         =   wgts20.a_data_uid;
-        vcd->a_szt3         =   1;                                                                  //  1 = ix1
-        g_signal_connect(wgts20.d_adjs_signal_ix1, "value-changed"      , G_CALLBACK(PgDisplays::GtkEvent__pgdisplays20__signal__value_changed__adj), (gpointer)vcd);
-
-        vcd = new View::CallbackData(this);
-        vcd->a_szt1         =   a_rdbt_selected_display_uid;
-        vcd->a_szt2         =   wgts20.a_data_uid;
-        vcd->a_szt3         =   2;                                                                  //  2 = ix2
-        g_signal_connect(wgts20.d_adjs_signal_ix2, "value-changed"      , G_CALLBACK(PgDisplays::GtkEvent__pgdisplays20__signal__value_changed__adj), (gpointer)vcd);
-
-        vcd = new View::CallbackData(this);
-        vcd->a_szt1         =   a_rdbt_selected_display_uid;
-        vcd->a_szt2         =   wgts20.a_data_uid;
-        vcd->a_szt3         =   3;                                                                  //  3 = sgn ep
-        g_signal_connect(wgts20.d_adjs_signal_ep, "value-changed"       , G_CALLBACK(PgDisplays::GtkEvent__pgdisplays20__signal__value_changed__adj), (gpointer)vcd);
-
-        vcd = new View::CallbackData(this);
-        vcd->a_szt1         =   a_rdbt_selected_display_uid;
-        vcd->a_szt2         =   wgts20.a_data_uid;
-        vcd->a_szt3         =   4;                                                                  //  4 = sgn join ep
-        g_signal_connect(wgts20.d_adjs_signal_join_ep, "value-changed"  , G_CALLBACK(PgDisplays::GtkEvent__pgdisplays20__signal__value_changed__adj), (gpointer)vcd);
-
-        vcd = new View::CallbackData(this);
-        vcd->a_szt1         =   a_rdbt_selected_display_uid;
-        vcd->a_szt2         =   wgts20.a_data_uid;
-        g_signal_connect(wgts20.d_chkb_signal_join, "toggled"           , G_CALLBACK(PgDisplays::GtkEvent__pgdisplays20__signal__toggled__checkbutton_join), (gpointer)vcd);
-
-        vcd = new View::CallbackData(this);
-        vcd->a_szt1         =   a_rdbt_selected_display_uid;
-        vcd->a_szt2         =   wgts20.a_data_uid;
-        g_signal_connect(wgts20.d_colb_signal, "color-set"              , G_CALLBACK(PgDisplays::GtkEvent__pgdisplays20__signal__color_set__colorbutton), (gpointer)vcd);
-
-
-        //  ........................................................................................
-lab_push:
-        a_widgets20.push_back(wgts20);
+//  ........................................................................................
+//lab_push:
+        //a_widgets20.push_back(wgts20);
     }
 
-    gtk_widget_show_all(d_table_20);
+    //gtk_widget_show_all(d_table_20);
+    //*/
+    //gtk_tree_view_set_model(GTK_TREE_VIEW(d_trvw_20), GTK_TREE_MODEL(d_lstr_20));
 
+    gtk_widget_queue_draw( this->d_trvw_20 );
+}
+//  ************************************************************************************************
+//  callbacks
+//  ************************************************************************************************
+bool
+View::PgDisplays::callbacks20_get_signal_uid_from_tree_path_string(
+    gchar   *   _i_str_path ,
+    size_t  *   _o_index    )
+{
+    GtkTreePath                 *   trp;
+    size_t                          idc;
+    gint                        *   indices;
+    //  ............................................................................................
+    *( _o_index )   =   0;
+
+    trp = gtk_tree_path_new_from_string (_i_str_path);
+    if ( ! trp )
+    {
+        TKE("%s\n", "gtk_tree_path_new_from_string() failed");
+        return FALSE;
+    }
+
+    indices = gtk_tree_path_get_indices(trp);                                                       // This value should not be freed.
+    //gtk_tree_path_free(trp);                                                                      // deleting trp here invalidate indices !!!
+    if ( ! indices )
+    {
+        TKE("%s\n", "gtk_tree_path_get_indices() failed");
+        gtk_tree_path_free(trp);
+        return FALSE;
+    }
+
+    idc             = (size_t)( indices[0] );
+    *( _o_index )   = a_modl_20.at(idc).a_signal_uid;
+
+    gtk_tree_path_free(trp);
+
+    return TRUE;
 }
 
 void
 View::PgDisplays::GtkEvent__pgdisplays20__signal__toggled__checkbutton(
-    GtkToggleButton *   _i_togglebutton ,
-    gpointer            _i_data         )
+    GtkCellRendererToggle       *   _i_cr       ,
+               gchar            *   _i_str_path ,
+               gpointer             _i_data     )
 {
     View::CallbackData          *   vcd     =   (View::CallbackData*)_i_data;
     View::PgDisplays            *   THIS    =   (View::PgDisplays*)vcd->a_instance;
+
+    GtkTreeIter                     iter;
+    size_t                          suid;
+    gint                            b       =   0;  //  not bool, we need bytes for gtk_tree_model_get() ; stack vars may be ovewritten !
     //  ............................................................................................
-    printf("checked-toggled\n");
+    TKI("%s\n", "(cr.toggled:signal draw) toggled");
+    //  ............................................................................................
+    //  get iter
+    if ( ! gtk_tree_model_get_iter_from_string ( GTK_TREE_MODEL(THIS->d_lstr_20)   , &iter, _i_str_path) )
+    {
+        TKE("%s\n", "20:stoggled:gtk_tree_model_get_iter_from_string() failed");
+        return;
+    }
+    //  ............................................................................................
+    if ( ! THIS->callbacks20_get_signal_uid_from_tree_path_string(_i_str_path, &suid) )
+    {
+        TKE("%s\n", "20:stoggled:Callbacks20_get_signal_uid_from_tree_path_string() failed");
+        return;
+    }
+    //  ............................................................................................
+    //  act eventually
+
+    //  no display selected, do nothing
     if ( THIS->a_rdbt_selected_display_uid == 0 )
         return;
 
-    THIS->control()->display__add_signal(THIS->a_rdbt_selected_display_uid, vcd->a_szt1);
+    gtk_tree_model_get( GTK_TREE_MODEL(THIS->d_lstr_20)   , &iter, 0, &b, -1);
+    gtk_list_store_set( THIS->d_lstr_20                   , &iter, 0, !b, -1);                      // unuseful ? will be refreshed by control
+
+    if ( ! b )
+    {
+        THIS->control()->display__add_signal(THIS->a_rdbt_selected_display_uid, suid);
+    }
+    else
+    {
+        THIS->control()->display__del_signal(THIS->a_rdbt_selected_display_uid, suid);
+    }
 }
 void
 View::PgDisplays::GtkEvent__pgdisplays20__signal__color_set__colorbutton(
@@ -549,56 +635,97 @@ View::PgDisplays::GtkEvent__pgdisplays20__signal__changed__cbbx(
 
     THIS->control()->display__chg_signal_motif(vcd->a_szt1, vcd->a_szt2, i);
 }
+
 void
-View::PgDisplays::GtkEvent__pgdisplays20__signal__value_changed__adj(
-    GtkAdjustment   *       _i_adj  ,
-    gpointer                _i_data )
+View::PgDisplays::GtkEvent__pgdisplays20__signal__edited__spin_ix(
+    GtkCellRendererText     *   _i_cr       ,
+    gchar                   *   _i_str_path ,
+    gchar                   *   _i_new_text ,
+    gpointer                    _i_data     )
 {
     View::CallbackData          *   vcd     =   (View::CallbackData*)_i_data;
     View::PgDisplays            *   THIS    =   (View::PgDisplays*)vcd->a_instance;
-    double                          v       =   gtk_adjustment_get_value(_i_adj);
+    size_t                          ixcol   =   vcd->a_szt1;
+
+    Model::sCDisplay            *   sdp     =   nullptr;
+
+    size_t                          suid;
+    double                          v       =   0.0;
     //  ............................................................................................
-    printf("value-changed (%lu)\n", vcd->a_szt3);
-
-
-    switch ( vcd->a_szt3 )
+    TKI("%s\n", "(cr.edited:ix1) edited");
+    //  ............................................................................................
+    if ( ! THIS->callbacks20_get_signal_uid_from_tree_path_string(_i_str_path, &suid) )
     {
-
-    case 1:                                                                                         // ix1
-    THIS->control()->display__chg_signal_ix1        (vcd->a_szt1, vcd->a_szt2, v);
-    break;
-
-    case 2:                                                                                         // ix2
-    THIS->control()->display__chg_signal_ix2        (vcd->a_szt1, vcd->a_szt2, v);
-    break;
-
-    case 3:                                                                                         // sgn ep
-    THIS->control()->display__chg_signal_ep         (vcd->a_szt1, vcd->a_szt2, v);
-    break;
-
-    case 4:                                                                                         // sgn join ep
-    THIS->control()->display__chg_signal_join_ep    (vcd->a_szt1, vcd->a_szt2, v);
-    break;
-
-
+        TKE("%s\n", "20:ix1:Callbacks20_get_signal_uid_from_tree_path_string() failed");
+        return;
     }
+    //  ............................................................................................
+    //  act eventually
 
+    //  no display selected, do nothing
+    if ( THIS->a_rdbt_selected_display_uid == 0 )
+        return;
+
+    //  cant get display !
+    sdp = THIS->model()->display__get_from_uid(THIS->a_rdbt_selected_display_uid);
+    if ( ! sdp )
+        return;
+
+    //  signal not drawed by display, do nothing
+    if ( THIS->model()->display__get_signal(sdp, suid) == nullptr )
+        return;
+
+    if ( ixcol == 4 )
+    {
+        v = gtk_adjustment_get_value(THIS->d_adjs_ix1);
+        THIS->control()->display__chg_signal_ix1( THIS->a_rdbt_selected_display_uid, suid, static_cast< size_t >( v ) );
+    }
+    if ( ixcol == 5 )
+    {
+        v = gtk_adjustment_get_value(THIS->d_adjs_ix2);
+        THIS->control()->display__chg_signal_ix2( THIS->a_rdbt_selected_display_uid, suid, static_cast< size_t >( v ) );
+    }
 }
 
 void
 View::PgDisplays::GtkEvent__pgdisplays20__signal__toggled__checkbutton_join(
-    GtkToggleButton *   _i_togglebutton ,
-    gpointer            _i_data         )
+    GtkCellRendererToggle       *   _i_cr       ,
+               gchar            *   _i_str_path ,
+               gpointer             _i_data     )
 {
     View::CallbackData          *   vcd     =   (View::CallbackData*)_i_data;
     View::PgDisplays            *   THIS    =   (View::PgDisplays*)vcd->a_instance;
+
+    GtkTreeIter                     iter;
+    size_t                          suid;
+    gint                            b       =   0;  //  not bool, we need bytes for gtk_tree_model_get() ; stack vars may be ovewritten !
     //  ............................................................................................
-    //if ( THIS->a_rdbt_selected_display_uid == 0 )
-    //    return;
+    TKI("%s\n", "(cr.toggled:signal join) toggled");
+    //  ............................................................................................
+    //  get iter
+    if ( ! gtk_tree_model_get_iter_from_string ( GTK_TREE_MODEL(THIS->d_lstr_20)   , &iter, _i_str_path) )
+    {
+        TKE("%s\n", "20:jtoggled:gtk_tree_model_get_iter_from_string() failed");
+        return;
+    }
+    //  ............................................................................................
+    if ( ! THIS->callbacks20_get_signal_uid_from_tree_path_string(_i_str_path, &suid) )
+    {
+        TKE("%s\n", "20:jtoggled:Callbacks20_get_signal_uid_from_tree_path_string() failed");
+        return;
+    }
+    //  ............................................................................................
+    //  act eventually
 
-    THIS->control()->display__chg_signal_join(vcd->a_szt1, vcd->a_szt2, gtk_toggle_button_get_active(_i_togglebutton));
+    //  no display selected, do nothing
+    if ( THIS->a_rdbt_selected_display_uid == 0 )
+        return;
+
+    gtk_tree_model_get( GTK_TREE_MODEL(THIS->d_lstr_20)   , &iter, 8, &b, -1);
+    //gtk_list_store_set( THIS->d_lstr_20                   , &iter, 0, !b, -1);                      // unuseful ? will be refreshed by control
+
+    THIS->control()->display__chg_signal_join(THIS->a_rdbt_selected_display_uid, suid, !b);
 }
-
 
 }
 }
